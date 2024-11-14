@@ -1,9 +1,10 @@
-// main.go
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"log"
+	"os"
 	"perplexity-mini/services"
 
 	"github.com/joho/godotenv"
@@ -16,9 +17,10 @@ func main() {
 	}
 
 	// Prompt the user for a search query
-	var query string
 	fmt.Print("Enter search query: ")
-	fmt.Scanln(&query)
+	scanner := bufio.NewScanner(os.Stdin)
+	scanner.Scan()
+	query := scanner.Text()
 
 	// Call the search service
 	results, err := services.QueryGoogleSearch(query)
