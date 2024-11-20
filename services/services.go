@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"strings"
 )
 
 const googleSearchAPI = "https://www.googleapis.com/customsearch/v1"
@@ -51,4 +52,18 @@ func QueryGoogleSearch(query string) ([]SearchResult, error) {
 
 	// Return the search results
 	return googleResponse.Items, nil
+}
+
+func CollateSnippets(results []SearchResult) string {
+	var snippets []string
+
+	// Loop through each result and collect snippets
+	for _, result := range results {
+		if result.Snippet != "" {
+			snippets = append(snippets, result.Snippet)
+		}
+	}
+
+	// Join all snippets with a newline or space for better readability
+	return strings.Join(snippets, "\n")
 }
